@@ -1,0 +1,7 @@
+<div class="container">
+  <mat-card class="user">
+    <img [src]="auth.user.photoURL" alt="auth" class="avatar" />
+    <p>{{ auth.user.displayName }}</p>
+    <p routerLink="/user-movies">My Movies</p>
+  </mat-card>
+</div>

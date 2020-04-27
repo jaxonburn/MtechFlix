@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="search">
+    <mat-form-field appearance="fill" floatPlaceholder="always" color="accent">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Search Movies"
+        (keyup)="setSearch($event)"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button (click)="searchMovie()" style="display: block;">
+      <span class="material-icons searchIcon">
+        search
+      </span>
+    </button>
+  </div>
+
+  <h1 class="movie-title">{{ title }}</h1>
+  <div class="MovieContainer" *ngIf="show">
+    <div class="cardContainer" *ngFor="let movie of movieList">
+        <mat-card [routerLink]="['/movie-detail/',  movie.id]">
+            <img src='https://image.tmdb.org/t/p/w500/{{movie.poster_path}}'>
+            <span style="overflow: hidden;">{{ movie.original_title }}</span>
+            <star-rating [value]="movie.vote_average / 2" totalstars="5" checkedcolor="gold" uncheckedcolor="black"
+                size="24px" readonly="false" (rate)="onRate($event)"></star-rating>
+            <!-- we need to find the right ^ to use for rating. vote_average is all the same 8.8 -->
+        </mat-card>
+      <div *ngIf="auth.user; else notLoggedIn" style="display: flex; flex-direction: row; justify-content: space-between; width: 80%;">
+        <div class="material-icons heart" 
+            (click)="toggleFavoriteMovie(movie.id)" >
+            {{isFavoriteMovie(movie.id) ? 'favorite' : 'favorite_border'}}
+
+        </div>
+        <span class="material-icons eye" (click)="toggleWatchedMovie(movie.id)">
+          {{isWatched(movie.id) ? 'visibility' : 'visibility_off'}}
+        </span>
+      </div>
+    </div>
+  
+
+  <ng-template #notLoggedIn>
+    temp
+  </ng-template>
+
+  <div class="notFound" *ngIf="show == false">
+    No movies found with that title
+  </div>
+</div>

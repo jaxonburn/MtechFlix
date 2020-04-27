@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+$navBar-color: #212121;
+$movieCard-background: #424242;
+$MFlix-red: #ff0400;
+$mainBackground: #000000;
+
+html,
+body {
+  height: 100%;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $mainBackground;
+}
+

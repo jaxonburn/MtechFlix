@@ -1,0 +1,95 @@
+<mat-card class="detailContainer" *ngIf="selectedMovie">
+    <div class="poster">
+        <img src="https://image.tmdb.org/t/p/w500/{{ selectedMovie.poster_path }}" width="400px" />
+    </div>
+    <!-- <div class="overview" [ngStyle]="{background: 'url(https://image.tmdb.org/t/p/w500/' + selectedMovie.backdrop_path + ')'}"> -->
+
+    <div class="overview" [style.backgroundImage]="
+      'url(https://image.tmdb.org/t/p/w500/' + selectedMovie.backdrop_path + ')'
+    ">
+        <div class="overviewContent">
+            <mat-card-title> {{ selectedMovie.original_title }}</mat-card-title>
+            <div style="display: flex; align-items: center;">
+                <span class="material-icons">grade</span>
+                {{ selectedMovie.vote_average }}
+                <span style="padding-left: 10px;">{{
+          runtime(selectedMovie.runtime)
+        }}</span>
+            </div>
+            <div class="companies">
+                <p *ngFor="let comp of movieProd">{{ comp }}</p>
+            </div>
+            <div class="genres">
+                <p *ngFor="let genre of movieGenres">{{ genre }}</p>
+            </div>
+            <!-- try to find a way to link to trailer -->
+            <!-- rating and date published -->
+            <!-- director -->
+            <div style="border-bottom: 1px solid white; margin: 5px;"></div>
+            <mat-card-content style="font-size: 1.2em;">
+                <span style="font-size: 1.5em; font-weight: bold;">Overview: </span>
+                {{ selectedMovie.overview }}</mat-card-content>
+        </div>
+    </div>
+</mat-card>
+
+<form class="commentForm" *ngIf="auth.user" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <h1 style="color:white;" >Leave a Comment!</h1>
+    <section>
+        <mat-form-field appearance="fill" floatPlaceholder="always" color="accent">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" class="titleIn" type="text" name="title" placeholder="Amazing!"/>
+            <mat-error *ngIf="commentForm.get('title').hasError('required')">
+                Title is required
+            </mat-error>
+        </mat-form-field>
+    </section>
+    <section>
+        <h3 style="color:white;">Rating</h3>
+        <mat-slide-toggle (change)="comment.useRating = !comment.useRating"></mat-slide-toggle>
+        <mat-slider formControlName="rating" *ngIf="comment.useRating" thumbLabel [displayWith]="formatLabel"
+            tickInterval="1" min="0" max="10"></mat-slider>
+    </section>
+    <section style="margin-bottom: 10px;">
+        <mat-form-field appearance="fill" floatPlaceholder="always" color="accent">
+            <mat-label>comment</mat-label>
+            <input matInput formControlName="text" class="commentIn" type="text" placeholder="great movie" />
+            <mat-error *ngIf="commentForm.get('text').hasError('required')" style="margin-bottom: 10px;">
+                Comment text is required
+            </mat-error>
+        </mat-form-field>
+    </section>
+    <button mat-raised-button type="submit" color="primary" style="display: block;">
+        Post
+    </button>
+</form>
+
+<div class="social">
+    <h1>Social</h1>
+    <div style="border-bottom: 1px solid black; margin: 5px; width: 100%;"></div>
+    <ng-container *ngIf="comments; else noComments">
+        <mat-card class="commentContainer" *ngFor="let comment of comments">
+            <img [src]="comment.photoURL" alt="auth" class="avatar" />
+            <div class="commentContent">
+                <mat-card-title> {{ comment.title }} </mat-card-title>
+                <span>{{ comment.name }}</span>
+                <p class="commentRating" *ngIf="comment.rating">
+                    <span class="material-icons">grade</span>{{ comment.rating }}
+                </p>
+                <span>{{ comment.dateCreated['seconds'] * 1000 | date:'short'}}</span>
+                <mat-card-content>
+                    {{ comment.text }}
+                </mat-card-content>
+            </div>
+            <ng-container *ngIf="auth.user">
+                <span *ngIf="comment.userUID === auth.user.uid" class="material-icons commentDelete"
+                    (click)="deleteComment(comment)">
+                    delete
+                </span>
+            </ng-container>
+        </mat-card>
+    </ng-container>
+    <ng-template #noComments>
+        <span style="color: white;">no comments exist</span>
+    </ng-template>
+</div>

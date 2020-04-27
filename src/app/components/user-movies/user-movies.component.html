@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="watched" style="color: white;">
+      <h2>Watched:</h2>
+      <div class="cards">
+        <ng-container *ngFor="let watchmovie of auth.watchedMovies">
+          <div class="CardContainer" *ngIf="watchmovie | async as movie">
+            <mat-card class="thisTest">
+              <img
+                src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"
+                style="width:100px"
+              />
+              {{ movie.original_title }}
+            </mat-card>
+            <span class="material-icons eye" (click)="toggleWatchedMovie(movie.id)">
+              {{isWatched(movie.id) ? 'visibility' : 'visibility_off'}}
+            </span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="savedMovies" style="color: white;">
+      <h2>Saved Movies:</h2>
+      <div class="cards">
+        <ng-container *ngFor="let favMovieObs of auth.favoriteMovies">
+          <div class="CardContainer" *ngIf="favMovieObs | async as movie">
+            <mat-card
+              [routerLink]="['/movie-detail/', movie.id]"
+              class="thisTest"
+            >
+              <img
+                src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"
+                style="width: 100px;"
+              />
+              <p>{{ movie.original_title }}</p>
+            </mat-card>
+            <div
+              class="material-icons heart"
+              *ngIf="auth.user"
+              (click)="toggleFavoriteMovie(movie.id)"
+            >
+              {{ isFavoriteMovie(movie.id) ? "favorite" : "favorite_border" }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <ng-template #noFavMovies>
+    <span>This user does not have any fav movies</span>
+  </ng-template>

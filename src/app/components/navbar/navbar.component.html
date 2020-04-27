@@ -1,0 +1,46 @@
+<mat-toolbar color="secondary" class="navbar">
+  <div class="mainNav">
+    <img
+      src="../../../assets/img/MflixLogo.png"
+      alt="logo"
+      class="logoImg"
+      (click)="homeRoute()"
+    />
+    <div class="linkcontain">
+      <span routerLink="/movie" style="cursor: pointer;" class="link">
+        <span class="material-icons">home</span>
+        Home
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="auth.user; else temp" class="navUserContent">
+    <div class="profile">
+      <img
+        routerLink="user-profile"
+        [src]="auth.user.photoURL"
+        alt="auth"
+        class="avatar"
+      />
+
+      <button [matMenuTriggerFor]="menu" class="toggleMenuButton">
+        <span class="material-icons">
+          keyboard_arrow_down
+        </span>
+      </button>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="user-profile">Profile</button>
+      <button mat-menu-item routerLink="user-movies">My Movies</button>
+      <button mat-menu-item (click)="auth.signOut()">Sign Out</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<ng-template #temp>
+  <div>
+    <button mat-stroked-button (click)="auth.googleLogin()">
+      Login with Google
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,89 @@
+@import "../../../styles.scss";
+.container {
+  .watched {
+    .cards {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      .CardContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.2s;
+        margin: 2em;
+        width: 150px; 
+        .thisTest {
+          font-size: 1.5vw;
+          width: 100%;
+          height: 100%;
+          margin: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          cursor: pointer;
+          // img {
+          //   width: 90%;
+          //   height: 80%;
+          // }
+        }
+      }
+      .CardContainer:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .savedMovies {
+    .cards {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      .CardContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.2s;
+        margin: 2em;
+        width: 150px; 
+        .thisTest {
+          font-size: 1.5vw;
+          width: 100%;
+          height: 100%;
+          margin: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          cursor: pointer;
+          // img {
+          //   width: 90%;
+          //   height: 80%;
+          // }
+        }
+      }
+      .CardContainer:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+}
+
+
+.heart {
+  color: $MFlix-red;
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
+.eye {
+  color: white;
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
+
+
+
